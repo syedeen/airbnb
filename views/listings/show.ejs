@@ -1,0 +1,126 @@
+<% layout("/layouts/boilerplate.ejs")-%>     
+ 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin=""></script>     
+<script> 
+  const locationData = {
+    location: "<%= data.location %>",
+    country: "<%= data.country %>"
+  };
+
+   const mapCoords = {
+    lon: "<%= data.geometry.coordinates[0] %>",
+    lat: "<%= data.geometry.coordinates[1] %>"
+  };
+
+</script>
+
+
+
+
+
+ <div class="row">
+  <div class="col-8 offset-3 mt-3" >
+    <h3>Listing Details</h3>
+    </div>
+
+<div class="card col-6 offset-3 show-card listing-card">
+ 
+  <img src="<%= data.image.url%>" class="card-img-top show-img " alt="listing-image">
+  <div class="card-body">
+    <b class="card-title"><%= data.title %></b>
+    <p class="card-text">
+      <%= `owned by ${data.owner.username}`%><br>
+      <%=data.description%><br>
+      &#8377; <%= data.price.toLocaleString("en-in")%><br>
+      <%= data.location %><br>
+      <%= data.country %><br>
+
+    </p>
+  
+  </div>
+</div>
+
+
+             
+
+
+<div class="row mt-3">
+  <div class="col-6 offset-3 d-flex">
+    <form method="get" action="/listings/<%=data._id%>/edit" class="me-2">
+      <button class="btn btn-dark">Edit</button>
+    </form>
+            
+    <form method="post" action="/listings/<%=data._id%>?_method=delete">
+      <button class="btn btn-dark">Delete</button>
+    </form>
+  </div>
+</div>      
+
+
+  
+    
+         <div class="col-8 offset-3 mt-3" >
+
+
+    <h4 class="mt-2"> Leave a review</h4>
+    <form  class="mb-3  needs-validation"  method="post"  action="/listings/<%=data._id%>/reviews"  novalidate>
+     
+        <div class="mb-3 mt-3">  
+          <label for="comment" class="form-label">Comment</label>
+          <textarea name="review[comment]" id="comment" class="form-control" cols="30" rows="5" required></textarea>
+          <div class="invalid-feedback">Please share your experience</div>
+        </div> 
+        <fieldset class="starability-grow">
+          <legend>First rating:</legend>
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="review[rating]"  value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+        <br>
+        <button class="btn  btn-outline-dark">submit</button>
+    </form>
+ 
+
+ 
+            
+           
+        <div class="row"> 
+          <hr>
+          <%for(let review of data.reviews){%>
+            <div class="card  col-5 mb-3 ms-3">
+              <h5 class="card-title"><%=review.author ? review.author.username : 'Unknown User'%></h5>
+               
+              <p class="card-text"><%=review.comment%></p>
+              <p class="starability-result" data-rating=<%=review.rating%>></p>
+              <form method="post" action="/listings/<%=data._id%>/reviews/<%=review._id%>?_method=DELETE">
+                <button class="btn btn-small btn-dark mb-2">Delete</button>
+              </form>
+            </div>       
+          <%}%>
+        </div>
+   </div>
+    <br>
+   <div id="map" class="col-9 offset-2  mb-4 "></div>
+    <br>
+
+
+
+<script src="/js/map.js" defer> </script>
+
+ </div>
+
+
+
+
+  
+      

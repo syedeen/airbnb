@@ -1,0 +1,140 @@
+
+<% layout("/layouts/boilerplate.ejs")-%>
+
+
+    
+  <!-- <h3>ALL LISTINGS</h3> -->
+     <style>
+ 
+        *{
+          margin: 0;
+          padding: 0;
+        }
+    
+        .filters{
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        .filter{
+          text-align: center;
+          margin-right: 2rem;
+          margin-top: 1rem;
+          opacity:0.7;
+          position: relative;
+    
+         
+        }
+        .filter:hover::after{
+          content:"";
+          background-color: black;
+          position:absolute;
+          height:2px;
+          width:  100%;
+          left: 0;
+          bottom: 0px;
+        }
+        .filter:hover{
+          opacity: 1;
+          cursor: pointer;
+        } 
+
+         .toggle-display{
+          display: none;
+         }
+        
+          .toggle-switch{
+            height: 3.5rem;
+            width:auto;
+            border:1px solid black;
+            border-radius:1rem;
+            padding:1rem;
+            display: flex;
+            align-items: center;
+          }
+
+
+     </style >
+    <div class="filters" >
+      <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>  
+      </div>  
+      <div class="filter">
+        <i class="fa-solid fa-mountain-city"></i>
+        <p>Amazing views</p>  
+  </div>   
+  <div class="filter">
+    <i class="fa-solid fa-water-ladder"></i>
+    <p>Swimming pool</p>  
+</div>  
+<div class="filter">
+  <i class="fa-solid fa-tractor"></i>
+  <p>Farms</p>  
+</div>  
+<div class="filter">
+  <i class="fa-solid fa-umbrella-beach"></i>
+  <p>Beach front</p>  
+</div>  
+<div class="filter">
+  <i class="fa-solid fa-mountain-city"></i>
+  <p>Snow fall</p>  
+</div>
+<div class="filter">
+  <i class="fa-solid fa-tree"></i>
+  <p>Scenary</p>  
+</div>
+<div class="filter">
+  <i class="fa-solid fa-campground"></i>
+  <p>Camping</p>  
+</div> 
+
+<div class="toggle-switch">
+<div class="form-check-reverse form-switch"> 
+  <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+</div>
+    </div>
+  </div>
+ 
+<div class="row row-cols-lg-3   row-cols-md-3  row-cols-sm-3  ">
+  <%for(let i=0;i<allListings.length;i++){%>
+     
+    <a  class="listing-link"   href="/listings/<%=allListings[i]._id%>">
+      <div class="card col  listing-card" >
+        
+        <img src="<%=allListings[i].image.url%>" class="card-img-top" alt="listing_image" style="height: 18rem;">
+        <div class="card-img-overlay"></div>
+        <div class="card-body">
+          <p class="card-text">
+             <b><%=allListings[i].title%> </b><br>
+             &#8377;<%=allListings[i].price.toLocaleString("en-in")%>/night 
+             &nbsp; &nbsp; <i class="tax-info" class="toggle-display"   >+ 18%</i>
+    
+            </p>
+           
+        </div>
+       </div>
+    </a>
+
+<%}%>  
+</div>
+   
+
+
+
+
+<script>
+  let taxSwitch  = document.getElementById("switchCheckDefault");
+  let taxinfo = document.getElementsByClassName("tax-info");
+  taxSwitch.addEventListener("click" , ()=>{
+    for(info of taxinfo){
+          info.classList.toggle("toggle-display");
+        }
+  })
+
+  
+
+</script>
+
+  
