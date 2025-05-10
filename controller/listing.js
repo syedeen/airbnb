@@ -42,7 +42,10 @@ const Listing = require("../model/listings.js");
        
         // post controller 
         postListing:async(req,res)=>{
-            let newlisting= req.body.listing;
+
+
+           try{
+ let newlisting= req.body.listing;
             const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${newlisting.location},${newlisting.country}&format=json`, {
                 headers: {
                   'User-Agent': 'airbnb (syedmoinudeen65@email.com)'
@@ -63,6 +66,13 @@ const Listing = require("../model/listings.js");
         await allListings.save();
         req.flash("success","new listing created successfully");
         res.redirect("/listings");
+           }catch(err){
+                   console.error(err);
+    req.flash("error", "Failed to create listing");
+    res.redirect("/listings");
+
+           }
+           
      },
        
          
