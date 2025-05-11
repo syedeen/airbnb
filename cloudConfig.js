@@ -1,19 +1,18 @@
- const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
-    cloud_name:process.env.Cloud_name,
-    api_key:process.env.Api_key,
-    api_secret:process.env.Api_secret
-    
-})
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'airbnb_dev',
-       allowedFormats: ["jpeg","png","jpg"],
+      allowedFormats: ["jpeg", "png", "jpg"],
     },
-  });
+});
 
-  module.exports={storage,cloudinary};
+module.exports = { storage, cloudinary };

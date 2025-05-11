@@ -30,11 +30,11 @@ app.set("views",path.join(__dirname , "views"));
 app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({extended:true}));
 
-const dburl = process.env.AtlasDb_pass;
+const dburl = process.env.ATLASDB_PASS;
 
 const store = MongoStore.create({ mongoUrl: dburl 
     ,crypto:{
-        secret:process.env.secret
+        secret:process.env.SECRET
     },
     touchAfter:24*3600,
 })
@@ -46,7 +46,7 @@ store.on("error" , (err)=>{
 
 const sessionOptions = {
         store,
-        secret:process.env.secret,
+        secret:process.env.SECRET,
         resave:false,
         saveUninitialized: true,
         cookie:{
