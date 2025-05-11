@@ -151,7 +151,6 @@ app.use((req,res,next)=>{
 
 app.use((err,req,res,next)=>{
     let{status=500,message}=err;
-    console.log(err);
     res.status(status).render("listings/error.ejs" , {err}) ;
 })
 
