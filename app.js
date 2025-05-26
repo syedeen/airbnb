@@ -56,7 +56,9 @@ const sessionOptions = {
         }
 }
 
-
+app.get('/', (req, res) => {
+  res.redirect('/listings');
+});
 
 
 
@@ -124,9 +126,8 @@ app.use("/", userRouter);
  
  
  
-// app.get("/",(req,res)=>{
-//     res.render("listings/root.ejs");
-//  })
+
+
  
 
 
